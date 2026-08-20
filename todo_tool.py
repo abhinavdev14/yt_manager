@@ -4,7 +4,7 @@ import json
 
 def load_data():
     try:
-        with open('todos.txt','r') as file:
+        with open('todos.json','r') as file:
             test = json.load(file)
             print(test)
             return test
@@ -12,22 +12,43 @@ def load_data():
         return []
 
 def save_data(todos):
-    with open('todos.txt','w') as file:
+    with open('todos.json','w') as file:
         json.dump(todos, file)
-def add_todo():
-    pass
-def list_todo():
-    pass
-def mark_todo():
-    pass
-def delete_todo():
-    pass
+
+def add_todo(todos):
+    task = input("enter ur task: ")
+    status = (" pending ")
+    todos.append({'task': task , 'status': status})
+    save_data(todos)
+
+def list_todo(todos):
+    for index , todo in enumerate(todos, start=1):
+        print(f"{index}.task: {todo['task']}, status: {todo['status']} ")
+
+def mark_todo(todos):
+    list_todo(todos)
+    index = int(input("konsa mark krna h? : "))
+    todos[index - 1]["status"] = "Completed"
+    save_data(todos)
+
+
+
+def delete_todo(todos):
+    list_todo(todos)
+    index = int(input("enter video no to be deleted"))
+    
+    if 1<= index <= len(todos):
+        del todos[index-1]
+        save_data(todos)
+
+    else:
+        print("invalid index")
 
 def main():
 
     while True:
 
-        func = load_data()
+        todos = load_data()
 
         print("1. Add todo")
         print("2. List Todos")
@@ -38,13 +59,13 @@ def main():
 
         match choice:
             case '1':
-                add_todo()
+                add_todo(todos)
             case '2':
-                list_todo()
+                list_todo(todos)
             case '3':
-                mark_todo()
+                mark_todo(todos)
             case '4':
-                delete_todo()
+                delete_todo(todos)
             case '5':
                 break
             case _:
