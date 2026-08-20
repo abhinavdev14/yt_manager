@@ -6,7 +6,7 @@ def load_data():
     try:
         with open('todos.json','r') as file:
             test = json.load(file)
-            print(test)
+            
             return test
     except FileNotFoundError:
         return []
@@ -17,7 +17,7 @@ def save_data(todos):
 
 def add_todo(todos):
     task = input("enter ur task: ")
-    status = (" pending ")
+    status = "pending"
     todos.append({'task': task , 'status': status})
     save_data(todos)
 
@@ -35,7 +35,7 @@ def mark_todo(todos):
 
 def delete_todo(todos):
     list_todo(todos)
-    index = int(input("enter video no to be deleted"))
+    index = int(input("which one ? : "))
     
     if 1<= index <= len(todos):
         del todos[index-1]
